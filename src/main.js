@@ -1,7 +1,7 @@
 const testAPI = () => {
-  const route = 'auth/change-password';
+  const route = 'media/create';
   const body = {
-    Authorization: 'U2FsdGVkX19P84uZLb/8JITJHk4yXnOc9xilGkWp3/uB2FDx6WDJW/qUI7541ffkXIGZI6ZTX5jZlujpHGkPU8M8Dmijm+mQeVhSkBcK9ki7roL/Slk=',
+    Authorization: 'U2FsdGVkX188/dwoDvI1e+1GEJMggapHnXKUPrROTYejPUjbr9Eb+37DP77ILloY2h6ynjITwMPgHi00AcgNvBwpjry3S+GZmw3aClCLvnzqddPC67s=',
     device: 'web_1711592631',
     name: 'Lê Khánh Duy',
     email: 'lkduy@gmail.com',
@@ -9,6 +9,33 @@ const testAPI = () => {
     new_password: 'duympt123456',
     access_token: 'U2FsdGVkX1/PGG75oQMswUhOM5ux1n10RAfzAZpbITy6TKX6nMLAzb+FfZCcaMSP253rmwQPwsBIm69HTWZldIDE/XeOvNQR/G+CV5oInuufj+rpgZE=',
     refresh_token: 'U2FsdGVkX1/URf90xUR1YH3WOWT/v4ubmF7NP7ps8iid11mcfE5KCI5V+qXRpf5Xw0e9KQ12AhqaG/+NihpJU9FiGHKBivXsY+bgbhoPZ7jlupDFn9U=',
+    medias: [
+      {
+        media_id: '33857',
+        original: {
+          url: 'dei14Kb17rYrou8cXiMcE',
+          name: '_956a7ac0-4d1c-4cfb-8150-fefe08647d6b.jpg',
+          size: 300600,
+          width: 1024,
+          height: 1024,
+          link_full: '',
+        },
+        medium: {
+          url: 'dF08UNp87j_tWAjcvSedR',
+          name: '_956a7ac0-4d1c-4cfb-8150-fefe08647d6b.jpg',
+          size: 300600,
+          width: 1024,
+          height: 1024,
+        },
+        thumb: {
+          url: 'VSWc_6-XhuYkbQnmTQyet',
+          name: '_956a7ac0-4d1c-4cfb-8150-fefe08647d6b.jpg',
+          size: 300600,
+          width: 1024,
+          height: 1024,
+        },
+      },
+    ],
   };
 
   const req = {
@@ -44,6 +71,9 @@ const doPost = (req) => {
         break;
       case 'user':
         res.data = handleUser(actionPart, accessToken, body);
+        break;
+      case 'media':
+        res.data = handleMedia(actionPart, accessToken, body);
         break;
       default:
         throw new ExceptionResponse(HTTP_STATUS.NOT_FOUND, `${resourcePart} NOT FOUND`);

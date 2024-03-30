@@ -1,4 +1,4 @@
 const handleValidate = (constraints, body) => {
-  const validationResult = validate(body, constraints);
-  if (validationResult) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, Object.values(validationResult)[0][0]);
+  const validationResult = validate(body, constraints, { format: "flat" });
+  if (validationResult) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, validationResult[0]);
 };

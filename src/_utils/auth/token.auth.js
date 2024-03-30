@@ -10,7 +10,6 @@ const generateToken = (userId, tokenType) => {
 
 const extractToken = (token) => {
   try {
-    Logger.log(token)
     const decrypted = CIPHER.decrypt(token);
 
     const { user_id, exp } = JSON.parse(decrypted);

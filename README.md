@@ -6,7 +6,7 @@ SViBox is a personal file storage project, with its backend developed using Goog
 
 ## Required Installations
 
-The project requires the installation of [@google/clasp](https://www.npmjs.com/package/@google/clasp). You can find it here.
+The project requires the installation of [@google/clasp](https://www.npmjs.com/package/@google/clasp#install). You can find it here.
 
 ## Installation
 

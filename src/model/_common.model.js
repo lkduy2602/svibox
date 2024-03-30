@@ -18,7 +18,7 @@ class CommonModel {
     };
   }
 
-  static #generateCommon() {
+  static generateCommon() {
     const timestamp = +moment();
 
     const rowNumber = '=ROW()';
@@ -36,7 +36,7 @@ class CommonModel {
 
   static insert(sheet, model, data) {
     const insert = {};
-    const defaultValue = CommonModel.#generateCommon();
+    const defaultValue = CommonModel.generateCommon();
     for (const key in model) {
       if (data[key]) {
         insert[key] = data[key];
