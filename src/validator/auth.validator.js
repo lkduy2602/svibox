@@ -76,7 +76,7 @@ const validateChangePassword = (body) => {
   };
 };
 
-const refreshTokenConstraint = {
+const tokenConstraint = {
   presence: {
     allowEmpty: false,
   },
@@ -88,16 +88,8 @@ const refreshTokenConstraint = {
 
 const validateTokenExp = (body) => {
   const constraints = {
-    access_token: {
-      presence: {
-        allowEmpty: false,
-      },
-      type: 'string',
-      length: {
-        minimum: 116,
-      },
-    },
-    refresh_token: refreshTokenConstraint,
+    access_token: tokenConstraint,
+    refresh_token: tokenConstraint,
   };
 
   handleValidate(constraints, body);
@@ -111,7 +103,7 @@ const validateTokenExp = (body) => {
 const validateTokenRefresh = (body) => {
   const constraints = {
     device: deviceConstraint,
-    refresh_token: refreshTokenConstraint,
+    refresh_token: tokenConstraint,
   };
 
   handleValidate(constraints, body);

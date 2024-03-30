@@ -6,7 +6,7 @@ const auth = (accessToken, isBypassLogin) => {
   const timestamp = +moment();
   if (timestamp > exp) throw new ExceptionResponse(HTTP_STATUS.UNAUTHORIZED, 'UNAUTHORIZED');
 
-  const auth = AUTH_MODEL.find({
+  const auth = authRepository.find({
     where: {
       user_id: `CONTAINS '${user_id}'`,
       access_token: `CONTAINS '${accessToken}'`,

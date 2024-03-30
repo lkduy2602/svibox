@@ -1,7 +1,7 @@
 const handleRegister = (body) => {
   const { name, email, password } = validateRegister(body);
 
-  const user = USER_MODEL.find({
+  const user = userRepository.find({
     where: {
       email: `CONTAINS '${email}'`,
     },
@@ -9,7 +9,7 @@ const handleRegister = (body) => {
   if (user) throw new ExceptionResponse(HTTP_STATUS.CONFLICT, 'email already exist');
 
   const hashPassword = hashAndEncodePassword(password);
-  USER_MODEL.insert({
+  userRepository.insert({
     name,
     email,
     password: hashPassword,
@@ -20,7 +20,7 @@ const handleLogin = (body) => {
   const { device, email, password } = validateLogin(body);
 
   const hashPassword = hashAndEncodePassword(password);
-  const user = USER_MODEL.find({
+  const user = userRepository.find({
     where: {
       email: `CONTAINS '${email}'`,
       password: `CONTAINS '${hashPassword}'`,
@@ -31,7 +31,7 @@ const handleLogin = (body) => {
   const accessToken = generateToken(user.id, TOKEN_TYPE.ACCESS);
   const refreshToken = generateToken(user.id, TOKEN_TYPE.REFRESH);
 
-  const auth = AUTH_MODEL.find({
+  const auth = authRepository.find({
     where: {
       user_id: `CONTAINS '${user.id}'`,
       device: `CONTAINS '${device}'`,
@@ -39,14 +39,14 @@ const handleLogin = (body) => {
   })[0];
 
   if (!auth) {
-    AUTH_MODEL.insert({
+    authRepository.insert({
       user_id: user.id,
       device: device,
       access_token: accessToken,
       refresh_token: refreshToken,
     });
   } else {
-    AUTH_MODEL.update(
+    authRepository.update(
       {
         row_number: auth.row_number,
       },
@@ -70,7 +70,7 @@ const handleChangePassword = (body, userId) => {
   const { device, password, new_password } = validateChangePassword(body);
 
   const hashPassword = hashAndEncodePassword(password);
-  const user = USER_MODEL.find({
+  const user = userRepository.find({
     where: {
       id: `CONTAINS '${userId}'`,
       password: `CONTAINS '${hashPassword}'`,
@@ -79,7 +79,7 @@ const handleChangePassword = (body, userId) => {
   if (!user) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, 'incorrect old password');
 
   const hashNewPassword = hashAndEncodePassword(new_password);
-  USER_MODEL.update(
+  userRepository.update(
     {
       row_number: user.row_number,
     },
@@ -90,7 +90,7 @@ const handleChangePassword = (body, userId) => {
 
   const accessToken = generateToken(user.id, TOKEN_TYPE.ACCESS);
   const refreshToken = generateToken(user.id, TOKEN_TYPE.REFRESH);
-  AUTH_MODEL.update(
+  authRepository.update(
     {
       user_id: `CONTAINS '${user.id}'`,
       device: `CONTAINS '${device}'`,
@@ -126,19 +126,20 @@ const handleTokenRefresh = (body) => {
   const timestamp = +moment();
   if (timestamp > exp) throw new ExceptionResponse(HTTP_STATUS.UNAUTHORIZED, 'UNAUTHORIZED');
 
-  const auth = AUTH_MODEL.find({
+  const auth = authRepository.find({
     where: {
       user_id: `CONTAINS '${user_id}'`,
       device: `CONTAINS '${device}'`,
       refresh_token: `CONTAINS '${refresh_token}'`,
     },
   })[0];
+  console.log('a', auth)
   if (!auth) throw new ExceptionResponse(HTTP_STATUS.UNAUTHORIZED, 'UNAUTHORIZED');
 
   const accessToken = generateToken(user_id, TOKEN_TYPE.ACCESS);
   const refreshToken = generateToken(user_id, TOKEN_TYPE.REFRESH);
 
-  AUTH_MODEL.update(
+  authRepository.update(
     {
       row_number: auth.row_number,
     },

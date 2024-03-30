@@ -1,14 +1,14 @@
 const testAPI = () => {
-  const route = 'media/list';
+  const route = 'auth/token-refresh';
   const body = {
-    Authorization: 'U2FsdGVkX188/dwoDvI1e+1GEJMggapHnXKUPrROTYejPUjbr9Eb+37DP77ILloY2h6ynjITwMPgHi00AcgNvBwpjry3S+GZmw3aClCLvnzqddPC67s=',
+    Authorization: 'U2FsdGVkX19AvjSzqae2Uv/DQ9k95k0fAPxKAbHsSbNnoTNC455MacGfxRi99yPy3PShhISIjRFF+pwIw0nkeLka6tWTKA9iIjYtkePzwXzz3dnWlwE=',
     device: 'web_1711592631',
     name: 'Lê Khánh Duy',
-    email: 'lkduy@gmail.com',
+    email: 'lkduy2602@gmail.com',
     password: 'duympt123',
-    new_password: 'duympt123456',
-    access_token: 'U2FsdGVkX1/PGG75oQMswUhOM5ux1n10RAfzAZpbITy6TKX6nMLAzb+FfZCcaMSP253rmwQPwsBIm69HTWZldIDE/XeOvNQR/G+CV5oInuufj+rpgZE=',
-    refresh_token: 'U2FsdGVkX1/URf90xUR1YH3WOWT/v4ubmF7NP7ps8iid11mcfE5KCI5V+qXRpf5Xw0e9KQ12AhqaG/+NihpJU9FiGHKBivXsY+bgbhoPZ7jlupDFn9U=',
+    new_password: 'duympt123',
+    access_token: 'U2FsdGVkX18rEYopky7CglAdeWbOo1YpBux3X94Xt1xiWfqX7ajovSa7qo4W25oBSyPs2rmtETEBzj5hqpiE++w+L9r8ODpFKeY5cucVmtH5oEQ0Jd8=',
+    refresh_token: 'U2FsdGVkX18cnaBivHomCfxIiO5bbEdtcqPvZlXSHjoXasEH53j8W19cCyZP1+etEjRQqLmH38N/HHTnvkNc4jAOGhi0xtJC0tBRT6/d3HUt3/IYy80=',
     media_id: '33859',
     limit: 10,
     position: '37137',

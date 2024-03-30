@@ -7,7 +7,7 @@ const queryGoogleSheet = (sheetId, query) => {
     },
   });
 
-  return Utilities.parseCsv(res.getContentText());
+  return convertArrayToObjectArray(Utilities.parseCsv(res.getContentText()));
 };
 
 const hashAndEncodePassword = (password) => {
@@ -23,4 +23,18 @@ const routeDecorator = ({ isBypassLogin, accessPermissions, handler }) => {
     accessPermissions: accessPermissions || [],
     handler,
   };
+};
+
+const convertArrayToObjectArray = (data) => {
+  const keys = data.shift();
+
+  return data.map((row) => {
+    const entity = {};
+
+    keys.forEach((key, index) => {
+      entity[key] = row[index];
+    });
+
+    return entity;
+  });
 };

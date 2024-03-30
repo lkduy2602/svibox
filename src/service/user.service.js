@@ -1,7 +1,7 @@
 const handleUpdateUser = (body, userId) => {
   const { name, email } = validateUpdateUser(body);
 
-  const emailExist = USER_MODEL.find({
+  const emailExist = userRepository.find({
     where: {
       id: `<> '${userId}'`,
       email: `CONTAINS '${email}'`,
@@ -9,7 +9,7 @@ const handleUpdateUser = (body, userId) => {
   })[0];
   if (emailExist) throw new ExceptionResponse(HTTP_STATUS.CONFLICT, 'email already exist');
 
-  USER_MODEL.update(
+  userRepository.update(
     {
       id: `CONTAINS '${userId}'`,
     },

@@ -6,7 +6,7 @@ const handleCreateMedia = (body, userId) => {
 
     const { media_id, original, medium, thumb } = media;
 
-    const mediaExist = MEDIA_MODEL.find({
+    const mediaExist = mediaRepository.find({
       where: {
         media_id: `CONTAINS '${media_id}'`,
       },
@@ -14,7 +14,7 @@ const handleCreateMedia = (body, userId) => {
     if (mediaExist) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, 'media already exist');
 
     const type = mediaType(original.name);
-    MEDIA_MODEL.insert({
+    mediaRepository.insert({
       user_id: userId,
       media_id,
       type,
@@ -28,15 +28,15 @@ const handleCreateMedia = (body, userId) => {
 const mediaType = (fileName) => {
   const extension = fileName.split('.').pop().toLowerCase();
 
-  if (!FILE_EXTENSIONS[extension]) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, 'file is not supported')
+  if (!FILE_EXTENSIONS[extension]) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, 'file is not supported');
 
-  return FILE_EXTENSIONS[extension]
+  return FILE_EXTENSIONS[extension];
 };
 
 const handleDeleteMedia = (body, userId) => {
   const { media_id } = validateDeleteMedia(body);
 
-  const mediaExist = MEDIA_MODEL.find({
+  const mediaExist = mediaRepository.find({
     where: {
       media_id: `CONTAINS '${media_id}'`,
       user_id: `CONTAINS '${userId}'`,
@@ -44,7 +44,7 @@ const handleDeleteMedia = (body, userId) => {
   })[0];
   if (!mediaExist) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, 'media not found');
 
-  MEDIA_MODEL.delete({
+  mediaRepository.delete({
     row_number: mediaExist.row_number,
   });
 };
@@ -57,7 +57,7 @@ const handleListMedia = (body, userId) => {
   };
   if (position) conditions.media_id = `< ${position}`;
 
-  const medias = MEDIA_MODEL.find({
+  const medias = mediaRepository.find({
     where: conditions,
     limit: limit,
     orderBy: {
