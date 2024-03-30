@@ -35,6 +35,10 @@ class MediaModel extends CommonModel {
     CommonModel.update(MEDIA_SHEET_ID, MEDIA_SHEET, MEDIA_MODEL, where, columnsUpdate);
   }
 
+  delete(where) {
+    CommonModel.delete(MEDIA_SHEET_ID, MEDIA_SHEET, MEDIA_MODEL, where);
+  }
+
   find({ where, groupBy, orderBy, offset, limit }) {
     const result = CommonModel.find(MEDIA_SHEET_ID, MEDIA_MODEL, { where, groupBy, orderBy, offset, limit });
 

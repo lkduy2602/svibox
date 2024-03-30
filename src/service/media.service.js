@@ -8,10 +8,10 @@ const handleCreateMedia = (body, userId) => {
 
     const mediaExist = MEDIA_MODEL.find({
       where: {
-        media_id: `= '${media_id}'`,
+        media_id: `CONTAINS '${media_id}'`,
       },
     })[0];
-    if (!mediaExist) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, 'media already exist');
+    if (mediaExist) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, 'media already exist');
 
     const type = mediaType(original.name);
     MEDIA_MODEL.insert({
@@ -28,4 +28,20 @@ const handleCreateMedia = (body, userId) => {
 const mediaType = (fileName) => {
   const extension = fileName.split('.').pop().toLowerCase();
   return FILE_EXTENSIONS[extension] || MEDIA_TYPES.OTHER;
+};
+
+const handleDeleteMedia = (body, userId) => {
+  const { media_id } = validateDeleteMedia(body);
+
+  const mediaExist = MEDIA_MODEL.find({
+    where: {
+      media_id: `CONTAINS '${media_id}'`,
+      user_id: `CONTAINS '${userId}'`,
+    },
+  })[0];
+  if (!mediaExist) throw new ExceptionResponse(HTTP_STATUS.BAD_REQUEST, 'media not found');
+
+  MEDIA_MODEL.delete({
+    row_number: mediaExist.row_number,
+  });
 };

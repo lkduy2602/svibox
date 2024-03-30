@@ -1,5 +1,5 @@
 const testAPI = () => {
-  const route = 'media/create';
+  const route = 'media/delete';
   const body = {
     Authorization: 'U2FsdGVkX188/dwoDvI1e+1GEJMggapHnXKUPrROTYejPUjbr9Eb+37DP77ILloY2h6ynjITwMPgHi00AcgNvBwpjry3S+GZmw3aClCLvnzqddPC67s=',
     device: 'web_1711592631',
@@ -9,6 +9,7 @@ const testAPI = () => {
     new_password: 'duympt123456',
     access_token: 'U2FsdGVkX1/PGG75oQMswUhOM5ux1n10RAfzAZpbITy6TKX6nMLAzb+FfZCcaMSP253rmwQPwsBIm69HTWZldIDE/XeOvNQR/G+CV5oInuufj+rpgZE=',
     refresh_token: 'U2FsdGVkX1/URf90xUR1YH3WOWT/v4ubmF7NP7ps8iid11mcfE5KCI5V+qXRpf5Xw0e9KQ12AhqaG/+NihpJU9FiGHKBivXsY+bgbhoPZ7jlupDFn9U=',
+    media_id: '33857',
     medias: [
       {
         media_id: '33857',

@@ -29,6 +29,10 @@ class UserModel extends CommonModel {
     CommonModel.update(USER_SHEET_ID, USER_SHEET, USER_MODEL, where, columnsUpdate);
   }
 
+  delete(where) {
+    CommonModel.delete(USER_SHEET_ID, USER_SHEET, USER_MODEL, where);
+  }
+
   find({ where, groupBy, orderBy, offset, limit }) {
     const result = CommonModel.find(USER_SHEET_ID, USER_MODEL, { where, groupBy, orderBy, offset, limit });
 

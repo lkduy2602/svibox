@@ -6,6 +6,12 @@ const handleMedia = (actionPart, accessToken, body) => {
       handler: handleCreateMedia,
     })
   );
+  routeMap.set(
+    'delete',
+    routeDecorator({
+      handler: handleDeleteMedia,
+    })
+  );
 
   const route = routeMap.get(actionPart);
   if (!route) throw new ExceptionResponse(HTTP_STATUS.NOT_FOUND, `${actionPart} NOT FOUND`);

@@ -87,6 +87,39 @@ class CommonModel {
     }
   }
 
+  static delete(sheetId, sheet, model, where) {
+    let rowsNumber = [];
+    if (where.row_number) {
+      rowsNumber = [where.row_number];
+    } else {
+      let whereClause = '';
+      let isFirstWhere = true;
+      for (const key in where) {
+        const value = where[key];
+
+        if (isFirstWhere) {
+          whereClause += `WHERE ${model[key]} ${value}`;
+
+          isFirstWhere = false;
+        } else {
+          whereClause += `AND ${model[key]} ${value}`;
+        }
+      }
+      const query = `SELECT * ${whereClause}`;
+      const result = queryGoogleSheet(sheetId, query);
+
+      result.forEach((item, index) => {
+        if (index == 0) return;
+
+        rowsNumber.push(item[0]);
+      });
+    }
+
+    rowsNumber.forEach((row) => {
+      sheet.deleteRow(row);
+    });
+  }
+
   static find(sheetId, model, { where, groupBy = {}, orderBy = {}, offset = 0, limit = 1 }) {
     let whereClause = '';
     let isFirstWhere = true;

@@ -31,6 +31,10 @@ class AuthModel extends CommonModel {
     CommonModel.update(AUTH_SHEET_ID, AUTH_SHEET, AUTH_MODEL, where, columnsUpdate);
   }
 
+  delete(where) {
+    CommonModel.delete(AUTH_SHEET_ID, AUTH_SHEET, AUTH_MODEL, where);
+  }
+
   find({ where, groupBy, orderBy, offset, limit }) {
     const result = CommonModel.find(AUTH_SHEET_ID, AUTH_MODEL, { where, groupBy, orderBy, offset, limit });
 
