@@ -22,7 +22,7 @@ class RepositoryFactory {
   }
 
   update(where, columnsUpdate) {
-    const rowsNumber = RepositoryFactory.getRowsNumber(this.entity, where);
+    const rowsNumber = RepositoryFactory.getRowsNumber(where);
 
     rowsNumber.forEach((row) => {
       for (const column in columnsUpdate) {
@@ -36,7 +36,7 @@ class RepositoryFactory {
   }
 
   delete(where) {
-    const rowsNumber = RepositoryFactory.getRowsNumber(this.entity, where);
+    const rowsNumber = RepositoryFactory.getRowsNumber(where);
 
     rowsNumber.forEach((row) => {
       this.sheet.deleteRow(row);
@@ -44,8 +44,8 @@ class RepositoryFactory {
   }
 
   find({ where, groupBy = {}, orderBy = {}, offset = 0, limit = 1 }) {
-    const whereClause = RepositoryFactory.generateWhereClause(this.entity, where);
-    const orderByClause = RepositoryFactory.generateOrderByClause(this.entity, orderBy);
+    const whereClause = RepositoryFactory.generateWhereClause(where);
+    const orderByClause = RepositoryFactory.generateOrderByClause(orderBy);
     const offsetClause = RepositoryFactory.generateOffsetClause(offset);
 
     const query = `SELECT * ${whereClause} ${orderByClause} LIMIT ${limit} ${offsetClause}`;
@@ -70,33 +70,33 @@ class RepositoryFactory {
     return commonEntity;
   }
 
-  static generateWhereClause(entity, where) {
+  static generateWhereClause(where) {
     let whereClause = '';
     let isFirstWhere = true;
     for (const key in where) {
       const value = where[key];
 
       if (isFirstWhere) {
-        whereClause += `WHERE ${entity[key]} ${value}`;
+        whereClause += `WHERE ${this.entity[key]} ${value}`;
         isFirstWhere = false;
       } else {
-        whereClause += `AND ${entity[key]} ${value}`;
+        whereClause += `AND ${this.entity[key]} ${value}`;
       }
     }
 
     return whereClause;
   }
 
-  static generateOrderByClause(entity, orderBy) {
+  static generateOrderByClause(orderBy) {
     let orderByClause = '';
     let isFirstOrderBy = true;
     for (const key in orderBy) {
       const value = orderBy[key] || 'ASC';
 
       if (isFirstOrderBy) {
-        orderByClause += `ORDER BY ${entity[key]} ${value}`;
+        orderByClause += `ORDER BY ${this.entity[key]} ${value}`;
       } else {
-        orderByClause += `, ${entity[key]} ${value}`;
+        orderByClause += `, ${this.entity[key]} ${value}`;
       }
     }
 
@@ -107,10 +107,10 @@ class RepositoryFactory {
     return offset ? `OFFSET ${offset}` : '';
   }
 
-  static getRowsNumber(entity, where) {
+  static getRowsNumber(where) {
     if (where.row_number) return [where.row_number];
 
-    const whereClause = RepositoryFactory.generateWhereClause(entity, where);
+    const whereClause = RepositoryFactory.generateWhereClause(where);
 
     const query = `SELECT * ${whereClause}`;
     const result = queryGoogleSheet(this.sheetId, query);
