@@ -11,3 +11,23 @@ const nameConstraint = {
     maximum: 30,
   },
 };
+
+const limitConstraint = {
+  presence: {
+    allowEmpty: false,
+  },
+  type: 'integer',
+  numericality: {
+    greaterThanOrEqualTo: 1,
+    lessThanOrEqualTo: 30,
+  },
+};
+
+const positionConstraint = {
+  type: 'string',
+  numericality: {
+    onlyInteger: true,
+    strict: true,
+    greaterThan: 0,
+  },
+};

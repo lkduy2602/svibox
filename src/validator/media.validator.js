@@ -99,3 +99,17 @@ const validateDeleteMedia = (body) => {
     media_id: body.media_id,
   };
 };
+
+const validateListMedia = (body) => {
+  const constraints = {
+    limit: limitConstraint,
+    position: positionConstraint,
+  };
+
+  handleValidate(constraints, body);
+
+  return {
+    limit: body.limit,
+    position: body.position,
+  };
+};
